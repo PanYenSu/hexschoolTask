@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  
+  <script>
+  var person1 = {
+    name: '小明',
+  }
+
+  var person2 = person1;
+  person2.name = '小美';
+
+  console.log(person1.name); // 值為 小明 or 小美
+
+  </script>
+</body>
+</html>

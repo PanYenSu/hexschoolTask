@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3"></script>
+  <link href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3/dist/vue-loading.css" rel="stylesheet">
+
+</head>
+<body>
+  <div id="app" class="container">
+    <!-- 注意，因為有載入原始的 Bootstrap，所以兩者都是能使用的 -->
+    <loading :active.sync="isLoading"></loading>
+
+    <button class="btn btn-outline-primary" @click="goLoading">切換</button>
+    <button class="btn btn-outline-primary" @click="goLoadingByPlugin">元件切換</button>
+  </div>
+
+  <script>
+    Vue.use(VueLoading); // 作為插件使用
+    Vue.component('loading', VueLoading); // 作為元件使用
+    const app = new Vue({
+      el: '#app',
+      data: {
+        isLoading: false,
+      },
+      methods: {
+        goLoading() {
+          this.isLoading = true;
+          setTimeout(() => {
+            this.isLoading = false
+          }, 3000);
+        },
+        goLoadingByPlugin() {
+          // 插件在原型中出現
+          console.log(this);
+
+          const loader = this.$loading.show({});
+          // simulate AJAX
+          setTimeout(() => {
+            loader.hide()
+          }, 3000)     
+        }
+      },
+      created() {
+        console.log(this);
+      }
+    })
+
+  </script>
+</body>
+</html>

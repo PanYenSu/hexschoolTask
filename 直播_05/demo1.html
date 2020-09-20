@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.3.2/dist/vue-loading.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.3.2/dist/vue-loading.css">
+</head>
+<body>
+  <div id="app">
+    <!-- <loading :active.sync="isLoading"></loading> -->
+    <button type="button" class="btn btn-primary" @click="clickMe">按我</button>
+  </div>
+  <script>
+    // console.log(VueLoading);
+    // 全域註冊的方式
+    // Vue.component('loading', VueLoading);
+
+    // 註冊在 Vue 的藍圖、原型
+    Vue.use(VueLoading);
+
+    new Vue({
+      el: '#app',
+      data: {
+        number: 1234567,
+        date: 1594988894,
+        isLoading: false,
+      },
+      methods: {
+        clickMe() {
+          let loader = this.$loading.show();
+          axios.get('https://course-ec-api.hexschool.io/api/8db6e157-f1c7-4688-bf28-c4948d307e8e/ec/products?page=1')
+            .then((res) => {
+              loader.hide()
+              console.log(res);
+            })
+        }
+      },
+      mounted() {
+        console.log(this);
+      },
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3"></script>
+  <link href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3/dist/vue-loading.css" rel="stylesheet">
+
+</head>
+<body>
+  <div id="app" class="container">
+    <!-- 注意，因為有載入原始的 Bootstrap，所以兩者都是能使用的 -->
+
+    <button class="btn btn-outline-primary" @click="goLoading" :disabled="btnLoading">取得資料 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="btnLoading"></span></button>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        btnLoading: false,
+      },
+      methods: {
+        goLoading() {
+          this.btnLoading = true;
+          axios.get('https://course-ec-api.hexschool.io/api/8db6e157-f1c7-4688-bf28-c4948d307e8e/ec/products?page=1')
+            .then(res => {
+              console.log(res);
+              this.btnLoading = false
+            })
+          // setTimeout(() => {
+          // }, 3000);
+        },
+      },
+      created() {
+        console.log(this);
+      }
+    })
+
+  </script>
+</body>
+</html>

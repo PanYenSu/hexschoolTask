@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 我房子在這 -->
+  <div id="app">
+    {{ text }}
+    {{ item.text }}
+    <button type="button" @click="updateItem">
+      更新物件內的文字
+    </button>
+    <input type="text" v-model="text">
+
+    
+    <ul>
+      <li v-for="(item, key) in list" :key="key">
+        {{ item.name }}
+      </li>
+    </ul>
+    <img :src="imgUrl" alt="">
+  </div>
+
+  <!-- 朋友的房子 -->
+  <div id="app2">
+    {{ text }}
+  </div>
+  
+  <script>
+    var text = '這是全域訊息';
+    var obj = {
+      text: '這裡有一段訊息',
+      updateText(text) {
+        this.text = text;
+      }
+    }
+    console.log(obj);
+    obj.updateText('更新訊息');
+    console.log(obj);
+
+
+    var app = new Vue({
+      el: '#app',
+      // 建構房子的資料集
+      data: {
+        text: '小明的房子',
+        item: {
+          
+        },
+        imgUrl: 'https://images.unsplash.com/photo-1593560368818-bd0c238ef976?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+        list: [
+          { name: '小明' }, { name: '小美' }, { name: '杰倫' }
+        ]
+      },
+      // 房子會用到的方法
+      methods: {
+        updateItem() {
+          this.item.text = '11234'
+        }
+      },
+      // 房子出現的瞬間，會做什麼事
+      created() {
+        console.log(this.text);
+      }
+    });
+
+    
+
+    var app2 = new Vue({
+      el: '#app2',
+      // 建構房子的資料集
+      data: {
+        text: '杰倫的房子'
+      },
+      // 房子會用到的方法
+      methods: {
+        
+      },
+      // 房子出現的瞬間，會做什麼事
+      created() {
+        console.log(this.text);
+      }
+    });
+
+    // 起手式 new Vue({}) 實體化
+    // 指向目標、建立資料、方法、生命週期
+  </script>
+</body>
+</html>

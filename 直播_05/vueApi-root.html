@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <div class="row justify-content-center">
+      <div class="col-6">
+        <card :extra="extraText"></card>
+        {{ extraText }}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 跨組件傳遞資料的方式（直接操作 root）
+    // 透過 Event Bus
+
+    Vue.component('card', {
+      props: ['extra'],
+      data() {
+        return {
+          localData: '元件內的 Data',
+        }
+      },
+      template: `<div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <input type="text" v-model="localData" class="form-control" />
+            <button class="btn btn-primary" @click="sendData">按我</button>
+          </h5>
+        </div>
+      </div>`,
+      methods: {
+        sendData() {
+          // 直接操作外層 $root
+          console.log(this);
+          // $root 呼叫方式 
+          this.$root.rootUpdate(this.localData)
+        }
+      },
+      created() {
+        this.extraText = this.extra
+      }
+    });
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        extraText: '外層的資料內容'
+      },
+      methods: {
+        rootUpdate(text) {
+          console.log(text);
+        }
+      },
+      created() {
+      }
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 我房子在這 -->
+  <div id="app">
+    <h1>如何正確插入資料的圖片</h1>
+    {{ text }}
+    <input type="text" v-model="text">
+    <button type="button" @click="alert">這裡有個按鈕</button>
+    <img src="" alt="">
+  </div>
+  
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        text: '這裡應該要呈現文字',
+        img: 'https://images.unsplash.com/photo-1593560368818-bd0c238ef976?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
+      },
+      methods: {
+        alert() {
+          alert(this.text)
+        }
+      },
+      created() {
+
+      }
+    });
+
+
+  </script>
+</body>
+</html>

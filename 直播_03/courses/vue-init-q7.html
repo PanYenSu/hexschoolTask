@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 我房子在這 -->
+  <div id="app">
+    <h1>為什麼 input 輸入內容後，反轉會出現問題</h1>
+    <ul>
+      <li v-for="item in list">
+        {{ item.name }}
+        <input type="text">
+      </li>
+    </ul>
+    <button type="button" @click="reverse">反轉</button>
+  </div>
+  
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        list: [
+          { name: '小明' }, { name: '小美' }, { name: '杰倫' }
+        ]
+      },
+      methods: {
+        reverse() {
+          this.list.reverse();
+        }
+      },
+      created() {
+
+      }
+    });
+
+
+  </script>
+</body>
+</html>

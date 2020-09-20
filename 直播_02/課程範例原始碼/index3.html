@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    var obj = {
+      data: [], // 是 1
+      getData() {
+        const vm = this; // 200 次
+        axios.get('https://randomuser.me/api/')
+          .then(function(res) {
+            console.log(res.data.results);
+            vm.data = res.data.results;
+            // 1
+            vm.render();
+          })
+          .catch(function(err) {
+            console.log('錯誤', err)
+            // 2
+          });
+      },
+      render() {
+        document.querySelector('#app')
+          .innerHTML = `${this.data[0].email}`
+      }
+    };
+    obj.getData();
+    // 3
+
+
+
+    // Promise
+    var data = ''; // 1
+
+    // function updateData() {
+    //   data = '更新資料'; // 2
+    // }
+
+    // var obj = {
+    //   updateData() { // 運行結果等同於傳統函式
+    //     data = '更新資料'; // 2
+    //   }
+    // }
+    // obj.updateData();
+    // 不用會建構 Promise 函式，會呼叫就好
+    var promiseSetTimeout = function(status) {
+      return new Promise(function(resolve, reject) {
+        setTimeout(() => {
+          if (status) {
+            resolve('promiseSetTimeout 成功')
+          } else {
+            reject('promiseSetTimeout 失敗')
+          }
+        }, 10);
+      })
+    }
+
+    // 過巢的問題
+    // promiseSetTimeout(true)
+    //   .then(function(res) {
+    //     console.log('1', res);
+    //     return promiseSetTimeout(false) // 接下一個 Promise
+    //   })
+    //   .then(function( res) {
+    //     console.log('2', res);
+    //     return promiseSetTimeout(true) // 接下一個 Promise
+    //   })
+    //   .then(function( res) {
+    //     console.log('3', res);
+    //   })
+    //   .catch(function(res) {
+    //     console.log(res);
+    //     return promiseSetTimeout(true);
+    //   })
+    //   .then(function( res) {
+    //     console.log('3', res);
+    //   })
+
+      // Promise base
+      // axios.get('https://randomuser.me/api/')
+      //   .then(function(res) {
+      //     console.log(res);
+      //   })
+      //   .catch(function(err) {
+      //     console.log('錯誤', err)
+      //   })
+
+
+      // get (網址)
+      // post, patch (網址, 資料)
+
+
+  </script>
+</body>
+</html>

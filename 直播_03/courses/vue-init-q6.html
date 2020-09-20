@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <!-- 我房子在這 -->
+  <div id="app">
+    <h1>如何呈現多筆資料在畫面上</h1>
+    <ul>
+      <li>...</li>
+    </ul>
+  </div>
+  
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        list: [
+          { name: '小明' }, { name: '小美' }, { name: '杰倫' }
+        ]
+      },
+      methods: {
+        alert() {
+          alert(this.text)
+        }
+      },
+      created() {
+
+      }
+    });
+
+
+  </script>
+</body>
+</html>

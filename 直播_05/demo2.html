@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.3.2/dist/vue-loading.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3.3.2/dist/vue-loading.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
+
+</head>
+<body>
+  <div id="app" class="container">
+    <!-- input -->
+    <!-- rules 規則 -->
+    <!-- v-slot 回饋 -->
+    <!-- <validation-provider rules="email" v-slot="{ errors }">
+      <input type="email" name="email" v-model="email">
+      <span>{{ errors[0] }}</span>
+    </validation-provider> -->
+
+    <!-- <validation-provider rules="min:8" v-slot="{ errors, classes, passed }">
+      <input type="text" name="email" v-model="email" class="form-control"
+        :class="classes">
+      <span class="invalid-feedback">{{ errors[0] }}</span>
+      <span v-if="passed">沒有問題</span>
+    </validation-provider> -->
+
+    <!-- form -->
+    <validation-observer v-slot="{ invalid }">
+      <form @submit.prevent="clickMe">
+
+        <validation-provider rules="email|required" v-slot="{ errors, classes, passed }">
+          <input type="email" name="信箱" v-model="email" class="form-control"
+            :class="classes">
+          <span class="invalid-feedback">{{ errors[0] }}</span>
+          <span v-if="passed">沒有問題</span>
+        </validation-provider>
+
+        <button type="submit" class="btn btn-primary" :disabled="invalid">按我</button>
+      </form>
+    </validation-observer>
+
+    <!-- 原生 HTML -->
+    <!-- <form action="">
+      <input type="email" name="email" required>
+      <button type="button">一般按鈕</button>
+      <button type="submit" @click="clickMe">按我</button>
+    </form> -->
+  </div>
+  <script type="module">
+    import zh_TW from './zh.js';
+    console.log(zh_TW);
+
+    // input 驗證
+    Vue.component('ValidationProvider', VeeValidate.ValidationProvider);
+    // form
+    Vue.component('ValidationObserver', VeeValidate.ValidationObserver);
+
+    VeeValidate.configure({
+      classes: {
+        valid: 'is-valid',
+        invalid: 'is-invalid',
+      }
+    });
+    // 加入至 VeeValidate 的設定檔案
+    VeeValidate.localize('tw', zh_TW);
+
+    new Vue({
+      el: '#app',
+      data: {
+        number: 1234567,
+        date: 1594988894,
+        isLoading: false,
+        email: ''
+      },
+      methods: {
+        clickMe() {
+          console.log('送出')
+        }
+      },
+      mounted() {
+
+      },
+    });
+
+  </script>
+</body>
+</html>

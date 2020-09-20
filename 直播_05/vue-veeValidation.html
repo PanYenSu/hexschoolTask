@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.6/vee-validate.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
+
+</head>
+<body>
+  <div id="app" class="container">
+
+    <!-- 驗證容器 -->
+    <!-- v-slot="{...}" 插入錯誤、回饋訊息狀態或樣式-->
+    <!-- rules="... | ..." 使用的驗證規則 -->
+    <validation-provider rules="required|email" v-slot="{ errors, classes, passed }">
+      <!-- 輸入框 -->
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" v-model="email"
+        class="form-control" :class="classes">
+      <!-- 錯誤訊息 -->
+      <span class="invalid-feedback">{{ errors[0] }}</span>
+      <span v-if="passed" class="valid-feedback">Email 正確</span>
+    </validation-provider>
+    <validation-provider rules="required|min:8" v-slot="{ errors, classes, passed }">
+      <!-- 輸入框 -->
+      <label for="password">這是一段密碼</label>
+      <input id="password" type="password" v-model="password"
+        class="form-control" :class="classes">
+      <!-- 錯誤訊息 -->
+      <span class="invalid-feedback">{{ errors[0] }}</span>
+      <span v-if="passed" class="valid-feedback">看起來很不錯</span>
+    </validation-provider>
+    <hr>
+
+    <!-- 使用 validation-observer 進行多個 provider 驗證-->
+    <!-- v-slot="{...}" 插入錯誤、回饋訊息狀態或樣式，invalid 是作為整個表單最終送出時驗證 -->
+    <validation-observer v-slot="{ invalid }">
+      <form @submit.prevent="submitForm">
+        <validation-provider rules="required|email" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
+          <!-- 輸入框 -->
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" v-model="email"
+            class="form-control" :class="classes">
+          <!-- 錯誤訊息 -->
+          <span class="invalid-feedback">{{ errors[0] }}</span>
+          <span v-if="passed" class="valid-feedback">Email 正確</span>
+        </validation-provider>
+        <button type="submit" class="btn btn-primary">送出表單</button>
+      </form>
+    </validation-observer>
+  </div>
+
+  <script type="module">
+    import zh_TW from './zh_TW.js';
+
+    // 驗證規則
+    VeeValidate.extend('password', {
+      validate: value => {
+        console.log(value);
+        value.length >= 8
+      },
+      message: '密碼太短'
+    });
+
+    VeeValidate.localize('tw', zh_TW);
+
+    // Class 設定檔案
+    VeeValidate.configure({
+      classes: {
+        valid: 'is-valid',
+        invalid: 'is-invalid',
+      }
+    })
+
+    // 將 VeeValidate input 驗證工具載入 作為全域註冊
+    Vue.component('ValidationProvider', VeeValidate.ValidationProvider);
+    // 將 VeeValidate 完整表單 驗證工具載入 作為全域註冊
+    Vue.component('ValidationObserver', VeeValidate.ValidationObserver);
+
+
+
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        email: '',
+        password: ''
+      },
+      methods: {
+        submitForm() {
+          console.log('送出表單')
+        }
+      },
+      created() {
+        console.log(this);
+        
+      }
+    })
+  </script>
+</body>
+</html>

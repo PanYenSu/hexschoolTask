@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <style>
+    html,
+    body {
+      height: 100vh;
+      text-align: center;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <input
+        id="customFile"
+        type="file"
+        class="form-control"
+      >
+      此範例未完整，請參考課程介紹修正
+      <img :src="filePath" alt="">
+      {{ filePath }}
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+      const uuid = ''; // 請使用個人 UUID
+      const apiPath = 'https://course-ec-api.hexschool.io/api/';
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            filePath: '',
+            token: ''
+          };
+        },
+        methods: {
+          uploadFile() {
+            this.token = document.cookie.replace(/(?:(?:^|.*;\s*)hexHomeworkToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+            // 選取 DOM 中的檔案資訊
+
+            // 轉成 Form Data
+            const formData = new FormData();
+            formData.append('file', uploadedfile);
+            
+            // 路由、驗證
+            const url = `${apiPath}${uuid}/admin/storage`;
+            axios.defaults.headers.common.Authorization = `Bearer ${this.token}`;
+
+            // 請自行完成 Ajax 範例
+            axios.post(url, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              }
+            })
+          },
+        },
+      })
+    </script>
+</body>
+</html>
